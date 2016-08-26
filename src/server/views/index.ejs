@@ -12,8 +12,11 @@
     <% } %>
   </head>
   <body>
-    <section class="todoapp">
-
+    <section class="todoapp" v-bind:class="[theme]">
+      <input type="radio" name="theme" value="light" checked v-model="theme">
+        Light theme
+      <input type="radio" name="theme" value="dark" v-model="theme">
+        Dark theme
       <header class="header">
         <h1>todos</h1>
         <input class="new-todo" autofocus autocomplete="off" 
@@ -27,7 +30,7 @@
           <li class="todo" v-for="todo in filteredTodos" 
             :class="{completed: todo.completed, editing: todo == editedTodo}">
             <div class="view">
-              <input class="toggle" type="checkbox" v-model="todo.completed">
+              <input @change="complete(todo)" class="toggle" type="checkbox" v-model="todo.completed">
               <label @dblclick="editTodo(todo)">{{todo.title}}</label>
               <button class="destroy" @click="removeTodo(todo)"></button>
             </div>
@@ -62,9 +65,9 @@
           Clear completed
         </button>
       </footer>
-
+        
     </section>
-
+      
     <footer class="info">
       <p>Double-click to edit a todo</p>
       <p>Written by <a href="http://evanyou.me">Evan You</a></p>

@@ -36,11 +36,22 @@ module.exports = function(grunt) {
         }
       }
     },
+      
+    uglify: {
+        options: {
+            banner: '/*! <%= pkg.name %> <%= grunt.template.today("dd-mm-yyyy") %> */\n'
+        },
+        dist: {
+            files: {
+                'public/app.min.js': 'public/app.js'
+            }
+        }
+    },
 
     watch: {
       javascript: {
         files: ['src/browser/js/**/*.js'],
-        tasks: ['browserify']
+        tasks: ['uglify', 'browserify']
       },
       sass: {
         files: 'src/browser/scss/**/*.scss',
@@ -85,13 +96,14 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-nodemon');
   grunt.loadNpmTasks('grunt-concurrent');
   grunt.loadNpmTasks('grunt-shell');
+  grunt.loadNpmTasks('grunt-contrib-uglify');
 
   // Default is running the local development server
   grunt.registerTask('default', ['sass:dev', 'browserify', 'concurrent:dev']);
 
   // Build production assets
   grunt.registerTask('collect_static', 
-    ['init_static', 'sass:dist', 'browserify']);
+    ['init_static', 'sass:dist', 'browserify', 'uglify']);
 
   // Custom tasks
   grunt.loadTasks('bin/tasks');

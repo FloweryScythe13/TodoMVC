@@ -20,7 +20,8 @@ module.exports = {
         $.ajax('/todos', {
           method: 'POST',
           data: {
-            title: todo.title
+            title: todo.title,
+            completed: todo.completed
           }
         }).done(function(data) {
           todo.id = data.id;
@@ -33,7 +34,8 @@ module.exports = {
         $.ajax('/todos/'+todo.id, {
           method: 'PUT',
           data: {
-            title: todo.title
+            title: todo.title,
+            completed: todo.completed
           }
         }).done(function(data) {
           todo.modified = false;

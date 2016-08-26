@@ -29,7 +29,8 @@ let app = {
     todos: [],
     newTodo: '',
     editedTodo: null,
-    visibility: 'all'
+    visibility: 'all',
+    theme: 'light'
   },
 
   // Initialize TODOs from database
@@ -107,6 +108,13 @@ let app = {
     cancelEdit: function (todo) {
       this.editedTodo = null;
       todo.title = this.beforeEditCache;
+    },
+      
+    complete: function () {
+      todo.modified = true;
+      todoStorage.save(this.todos, function(err) {
+          if (err) console.log(err);
+      });
     },
 
     removeCompleted: function () {
